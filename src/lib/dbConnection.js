@@ -18,7 +18,9 @@ if (process.env.NODE_ENV === "development") {
 
 clientPromise = client.connect();
 
-export async function getCollection(collectionName) {
+async function getCollection(collectionName) {
   const db = (await clientPromise).db();
   return db.collection(collectionName);
 }
+
+export default getCollection;
