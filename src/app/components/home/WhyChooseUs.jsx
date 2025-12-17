@@ -77,11 +77,9 @@ export default function WhyChooseUs() {
             >
               <div className="card-body items-center text-center">
                 <div className="text-4xl mb-3">{feature.icon}</div>
-
                 <h3 className="card-title text-base-content">
                   {feature.title}
                 </h3>
-
                 <p className="text-base-content/70 text-sm">
                   {feature.description}
                 </p>
