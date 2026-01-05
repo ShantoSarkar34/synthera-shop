@@ -91,7 +91,6 @@ export default function AiRecommendations() {
             <img
               src={product.image}
               alt={product.title}
-              fill
               className="object-cover hover:scale-105 transition-transform duration-500"
             />
           </div>

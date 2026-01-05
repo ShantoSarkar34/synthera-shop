@@ -41,9 +41,9 @@ export default function NewArrivals() {
 
         {/* Filter Tabs */}
         <div className="flex justify-center gap-3 flex-wrap mb-10">
-          {categories.map((cat) => (
+          {categories.map((cat,idx) => (
             <button
-              key={cat._id}
+              key={idx}
               onClick={() => setActive(cat)}
               className={`btn btn-sm ${
                 active === cat ? "btn-warning" : "btn-outline"
@@ -58,7 +58,7 @@ export default function NewArrivals() {
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((product, index) => (
             <motion.div
-              key={product.id}
+              key={index}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
               whileHover={{ y: -6 }}
@@ -68,7 +68,6 @@ export default function NewArrivals() {
                 <img
                   src={product.image}
                   alt={product.title}
-                  fill
                   className="object-cover "
                 />
                 <span className="badge badge-success absolute top-3 left-3">

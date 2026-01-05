@@ -28,42 +28,43 @@ export default function SyntheraChatbot() {
     }
   }, [messages, open]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!input.trim()) return;
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!input.trim()) return;
 
-    const userMessage = { role: "user", content: input.trim() };
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
-    setLoading(true);
+  const userMessage = { role: "user", content: input.trim() };
+  const updatedMessages = [...messages, userMessage];
 
-    try {
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userMessage.content }),
-      });
+  setMessages(updatedMessages);
+  setInput("");
+  setLoading(true);
 
-      const data = await res.json();
-      if (data.reply) {
-        const botMessage = { role: "ai", content: data.reply };
-        setMessages((prev) => [...prev, botMessage]);
-      } else {
-        setMessages((prev) => [
-          ...prev,
-          { role: "ai", content: "Sorry, I couldn’t understand that." },
-        ]);
-      }
-    } catch (err) {
-      console.error("Chat error:", err);
-      setMessages((prev) => [
-        ...prev,
-        { role: "ai", content: "Oops! Something went wrong." },
-      ]);
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: userMessage.content,
+        history: updatedMessages.slice(-8),
+      }),
+    });
+
+    const data = await res.json();
+
+    setMessages((prev) => [
+      ...prev,
+      { role: "ai", content: data.reply || "Sorry, I couldn’t understand that." },
+    ]);
+  } catch (err) {
+    setMessages((prev) => [
+      ...prev,
+      { role: "ai", content: "Oops! Something went wrong." },
+    ]);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="fixed right-6 bottom-6 z-50">
@@ -131,7 +132,7 @@ export default function SyntheraChatbot() {
               <input
                 type="text"
                 aria-label="Type a message"
-                className="flex-1 placeholder:text-white  bg-gray-800  px-3 py-2 rounded-lg border border-gray-700 focus:outline-none  focus:border-yellow-300"
+                className="flex-1 placeholder:text-white text-white  bg-gray-800  px-3 py-2 rounded-lg border border-[#37B6FF] focus:outline-none  focus:border-[#116291]"
                 placeholder="Ask Synthera . . ."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}

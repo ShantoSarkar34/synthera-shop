@@ -14,7 +14,7 @@ export default function Home() {
     <>
       <HeroBanner />
       <Categories />
-      <FeaturedProducts />
+      <FeaturedProducts/>
       <OffersSection />
       <NewArrivals />
       <AiRecommendations />

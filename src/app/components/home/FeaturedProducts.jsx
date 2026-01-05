@@ -67,7 +67,6 @@ export default function FeaturedProducts() {
                 <img
                   src={product.image}
                   alt={product.title}
-                  fill
                   className="object-cover"
                 />
                 <span className="badge badge-warning absolute top-3 left-3">
