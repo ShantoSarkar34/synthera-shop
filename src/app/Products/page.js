@@ -189,7 +189,7 @@ export default function ProductsPage() {
               {/* Pagination */}
               <div className="flex justify-center items-center mt-10 space-x-4">
                 <button
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md disabled:bg-gray-300 hover:bg-blue-700 transition"
+                  className="px-4 py-2 cursor-pointer bg-blue-600 text-white rounded-md disabled:bg-gray-400 hover:bg-blue-700 transition"
                   disabled={page === 1}
                   onClick={() => setPage((prev) => prev - 1)}
                 >
@@ -199,7 +199,7 @@ export default function ProductsPage() {
                   Page {page} of {totalPages}
                 </span>
                 <button
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md disabled:bg-gray-300 hover:bg-blue-700 transition"
+                  className="px-4 py-2 cursor-pointer bg-blue-600 text-white rounded-md disabled:bg-gray-400 hover:bg-blue-700 transition"
                   disabled={page === totalPages}
                   onClick={() => setPage((prev) => prev + 1)}
                 >

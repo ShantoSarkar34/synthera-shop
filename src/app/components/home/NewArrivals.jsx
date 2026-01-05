@@ -1,61 +1,28 @@
 "use client";
-
 import { motion } from "framer-motion";
-import { useState } from "react";
-
-const products = [
-  {
-    id: 1,
-    title: "Smart Fitness Tracker",
-    category: "Electronics",
-    price: 89,
-    image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9",
-  },
-  {
-    id: 2,
-    title: "Minimal Wireless Earbuds",
-    category: "Electronics",
-    price: 59,
-    image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df",
-  },
-  {
-    id: 3,
-    title: "Modern Office Chair",
-    category: "Furniture",
-    price: 199,
-    image: "https://images.unsplash.com/photo-1582582494700-1e52ec65f6b1",
-  },
-  {
-    id: 4,
-    title: "Stylish Backpack",
-    category: "Fashion",
-    price: 49,
-    image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f",
-  },
-  {
-    id: 5,
-    title: "Premium Desk Lamp",
-    category: "Furniture",
-    price: 69,
-    image: "https://images.unsplash.com/photo-1540574163026-643ea20ade25",
-  },
-  {
-    id: 6,
-    title: "Casual Sneakers",
-    category: "Fashion",
-    price: 79,
-    image: "https://images.unsplash.com/photo-1528701800489-20be3c1e3cfa",
-  },
-];
+import { useEffect, useState } from "react";
 
 const categories = ["All", "Electronics", "Fashion", "Furniture"];
 
 export default function NewArrivals() {
   const [active, setActive] = useState("All");
+  const [product, setProduct] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("https://online-shop9070-server.onrender.com/all-products")
+      .then((res) => res.json())
+      .then((data) => {
+        setProduct(data);
+        setLoading(false);
+      });
+  }, [product]);
 
   const filtered =
-    active === "All" ? products : products.filter((p) => p.category === active);
-
+    active === "All" ? product : product.filter((p) => p.category === active);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <section className="py-20 bg-base-200">
       <div className="container mx-auto px-4">
@@ -76,7 +43,7 @@ export default function NewArrivals() {
         <div className="flex justify-center gap-3 flex-wrap mb-10">
           {categories.map((cat) => (
             <button
-              key={cat}
+              key={cat._id}
               onClick={() => setActive(cat)}
               className={`btn btn-sm ${
                 active === cat ? "btn-warning" : "btn-outline"
@@ -97,12 +64,12 @@ export default function NewArrivals() {
               whileHover={{ y: -6 }}
               className="card bg-base-100 shadow-md hover:shadow-xl transition-all"
             >
-              <figure className="relative h-56">
+              <figure className="relative h-86">
                 <img
                   src={product.image}
                   alt={product.title}
                   fill
-                  className="object-cover"
+                  className="object-cover "
                 />
                 <span className="badge badge-success absolute top-3 left-3">
                   New
@@ -110,9 +77,7 @@ export default function NewArrivals() {
               </figure>
 
               <div className="card-body p-5">
-                <h3 className="card-title text-base-content">
-                  {product.title}
-                </h3>
+                <h3 className="card-title text-base-content">{product.name}</h3>
 
                 <p className="text-base-content/60 text-sm">
                   Category: {product.category}
